@@ -1,0 +1,15 @@
+{
+  "name": "ttesercizio-cerca-matricole",
+  "version": "1.0.0",
+  "description": "Trova i bus di ogni linea di Trentino Trasporti.",
+  "main": "node.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "wower3201",
+  "license": "MIT",
+  "dependencies": {
+    "nexe": "^4.0.0-rc.6",
+    "prompt-sync": "^4.2.0"
+  }
+}
