@@ -1,8 +1,8 @@
 const https = require('https');
 const prompt = require("prompt-sync")();
-console.log("TROVA MATRICOLE DI LINEE TRENTINO TRASPORTI\nMostra solo le matricole utilizzate in giornata.")
-const type = prompt("Inserire tipologia di linea. E per Extraurbano, U per Urbano (valido solo per Trento): ").trim();
-const id = prompt("Inserisci la linea (es. B101; 17): ").trim();
+console.log("TROVA MATRICOLE DI LINEE TRENTINO TRASPORTI\nMostra solo le matricole utilizzate in giornata.\nEscluso il servizio intracomunale di Lavis.\nIl servizio urbano Alto Garda e quello di Pergine va usato il numero extraurbano per trovare matricole.")
+const type = prompt("Inserire tipologia di linea. E per Extraurbano, U per Urbano: ").trim();
+const id = prompt("Inserisci la linea (es. B101; 17)(!PER LE LINEE DI ROVERETO METTI UNA R PRIMA DEL NUMERO ES. 1 = R1): ").trim();
 const linee = new Map([
     ["B101", 1],
     ["B102", 3],
@@ -16,6 +16,7 @@ const linee = new Map([
     ["B112", 117],
     ["B113", 136],
     ["B114", 7],
+    ["B115", 300],
     ["B116", 151],
     ["B120", 604],
     ["B121", 63],
@@ -76,6 +77,7 @@ const linee = new Map([
     ["B418", 177],
     ["B423", 188],
     ["B425", 309],
+    ["B428", 96],
     ["B429", 84],
     ["B450", 717],
     ["B461", 549],
@@ -144,12 +146,26 @@ const linee = new Map([
     ["C", 533],
     ["N", 621],
     ["P", 617],
-    ["M", 615]
+    ["G", 568],
+    ["M", 615],
+    ["R1", 578],
+    ["R2", 582],
+    ["R3", 590],
+    ["R4", 592],
+    ["R5", 594],
+    ["R6", 580],
+    ["R7", 512],
+    ["RA", 562],
+    ["RB", 563],
+    ["RP", 601],
+    ["RS", 602],
+    ["RAB", 566],
+    ["RV", 598]
 ]);
 
 const routeId = linee.get(id);
 if (!routeId) {
-    console.error("Linea non trovata!");
+    console.error("Linea non trovata o non ancora supportata.");
     process.exit(1);
 }
 
@@ -180,7 +196,7 @@ const fasceMatricole = [
     { range: [870, 899], name: "Scania OmniCity 12m" },
     { range: [951, 954], name: "Otokar Vectio C" },
     { range: [1001, 1002], name: "Iveco DolomiTech Idrogeno" },
-    { range: [1065, 1072], name: "Irisbus Daily" },
+    { range: [1050, 1072], name: "Irisbus Daily" },
     { range: [1073, 1079], name: "Iveco Daily Line" },
     { range: [1101, 1105], name: "Magister New Car" },
     { range: [1106, 1116], name: "Iveco Daily MMI Thesi" },
@@ -258,7 +274,7 @@ https.get(url, options, (res) => {
                     .filter(matricola => matricola !== null))]; // Rimuove duplicati
 
                 if (matricole.length > 0) {
-                    console.log("Autobus usati nel corso della giornata:");
+                    console.log(`Autobus usati nel corso della giornata sulla linea ${id}:`);
                     matricole.forEach(matricola => {
                         const nomeBus = getBusName(Number(matricola));
                         console.log(`Matricola: ${matricola}, Bus: ${nomeBus}`);
