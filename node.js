@@ -1,8 +1,8 @@
 const https = require('https');
 const prompt = require("prompt-sync")();
-console.log("TROVA MATRICOLE DI LINEE TRENTINO TRASPORTI\nMostra solo le matricole utilizzate in giornata.\nEscluso il servizio intracomunale di Lavis.\nIl servizio urbano Alto Garda e quello di Pergine va usato il numero extraurbano per trovare matricole.")
+console.log("Trova Bus Trentino Trasporti\n(C) 2025 Wower3201\nMostra solo le matricole utilizzate in giornata.\nEscluso il servizio intracomunale di Lavis.\nIl servizio urbano Alto Garda e quello di Pergine va usato il numero extraurbano per trovare matricole.")
 const type = prompt("Inserire tipologia di linea. E per Extraurbano, U per Urbano: ").trim();
-const id = prompt("Inserisci la linea (es. B101; 17)(!PER LE LINEE DI ROVERETO METTI UNA R PRIMA DEL NUMERO ES. 1 = R1): ").trim();
+const id = prompt("Inserisci la linea (es. B101; 17)(!PER LE LINEE URBANE DI ROVERETO METTI UNA R PRIMA DEL NUMERO O LETTERA ES. 1 = R1, A = RA): ").trim();
 const linee = new Map([
     ["B101", 1],
     ["B102", 3],
